@@ -1,0 +1,62 @@
+name: ci
+
+# Fast per-push checks; the cross-kernel verifier gate is kernel-matrix.yml.
+on:
+  workflow_dispatch:
+  push:
+    branches: [master, main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  bpf:
+    name: build BPF objects
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: make bpf
+        run: make bpf
+      - uses: actions/upload-artifact@v4
+        with:
+          name: probes
+          path: lib/bpf/bin/*.bpf.o
+
+  scripts:
+    name: script syntax
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: make check
+        run: make check
+
+  exporters:
+    name: exporter directories
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: every exporter has a scrape entrypoint
+        run: |
+          set -euo pipefail
+          for d in exporters/*/; do
+            [ -f "$d/metrics.js" ] || { echo "::error::$d has no metrics.js"; exit 1; }
+          done
+          echo "$(ls -d exporters/*/ | wc -l) exporters"
+      - name: released exporters follow the template
+        run: |
+          set -euo pipefail
+          for d in exporters/*/; do
+            [ -f "$d/Makefile" ] || continue
+            for f in README.md deploy.sh; do
+              [ -f "$d/$f" ] || { echo "::error::$d has a Makefile but no $f"; exit 1; }
+            done
+            for h in "## Getting started" "## Options" "## What comes out" "## Differences from" "## Read more"; do
+              grep -q "^$h" "$d/README.md" || { echo "::error::$d/README.md is missing '$h' (see exporters/README.template.md)"; exit 1; }
+            done
+            grep -q "curl -fsSL https://yeet.cx | sh" "$d/README.md" || { echo "::error::$d/README.md lacks the install line"; exit 1; }
+            echo "$d ok"
+          done
