@@ -21,7 +21,7 @@
 
 #define TCX_NEXT (-1)
 
-#define DATA_MAX 512           /* power of two: see the mask below */
+#define DATA_MAX 512           /* power of two: see the bound below */
 
 #define DIR_EGRESS  0
 #define DIR_INGRESS 1
@@ -129,14 +129,13 @@ static __always_inline int handle(struct __sk_buff *skb, __u8 dir)
     if (skb->len <= poff)
         return TCX_NEXT;
     __u32 plen = skb->len - poff;
-    __u32 cap = plen > DATA_MAX - 1 ? DATA_MAX - 1 : plen;
-    cap &= (DATA_MAX - 1);
-    /* Pin the bound the verifier sees: without the barrier clang folds
-       the zero test into the length compare above and the load below
-       is checked against [0, 511]. */
-    asm volatile("" : "+r"(cap));
-    if (cap == 0)
-        return TCX_NEXT;
+    /* The copy length must be provably in [1, DATA_MAX] on every
+       verifier, and a `cap == 0` branch is not enough: kernels before
+       6.8 do not narrow a register's minimum on a != 0 compare and
+       reject the load below as a possible zero-sized read. So the
+       bound comes from arithmetic: clamp, then (x - 1) & mask, + 1. */
+    __u32 cap = plen > DATA_MAX ? DATA_MAX : plen;
+    cap = ((cap - 1) & (DATA_MAX - 1)) + 1;
 
     struct wire_event *e = bpf_ringbuf_reserve(&events, sizeof(*e), 0);
     if (!e)

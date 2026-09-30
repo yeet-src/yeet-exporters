@@ -32,6 +32,12 @@ if [ -n "${OUT_CSV:-}" ]; then
 fi
 
 if printf '%s\n' "$csv" | tail -n +2 | grep -q ',failure$'; then
+	# The verifier's own log for each rejected program, so the reason is
+	# in the job output and not only the verdict.
+	printf '%s\n' "$csv" | tail -n +2 | grep ',failure$' | while IFS=, read -r file prog _; do
+		echo ">> verifier log for $file:$prog"
+		"$VERISTAT" -v -f "$prog" "$file" 2>&1 | tail -n 60 || true
+	done
 	echo "::error::BPF verifier rejected a program on kernel $KREL" >&2
 	exit 1
 fi
