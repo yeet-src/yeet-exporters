@@ -1,5 +1,16 @@
 # <exporter name>, on yeet
 
+<p align="center">
+  <img src="https://img.shields.io/badge/platform-Linux-1793D1?logo=linux&logoColor=white" alt="Linux">
+  <img src="https://img.shields.io/badge/built%20with-yeet%20%2B%20eBPF-8A2BE2" alt="yeet + eBPF">
+  <img src="https://img.shields.io/badge/metrics-Prometheus-E6522C?logo=prometheus&logoColor=white" alt="Prometheus">
+  <img src="https://img.shields.io/badge/dashboard-Grafana-F46800?logo=grafana&logoColor=white" alt="Grafana">
+  <a href="https://github.com/yeet-src/yeet-exporters/actions/workflows/kernel-matrix.yml"><img src="https://github.com/yeet-src/yeet-exporters/actions/workflows/kernel-matrix.yml/badge.svg" alt="kernel matrix"></a>
+  <a href="https://discord.gg/JxVseaAVAU"><img src="https://img.shields.io/badge/chat-Discord-5865F2?logo=discord&logoColor=white" alt="Discord"></a>
+</p>
+
+![<exporter> on yeet: <what the panels show>](docs/dashboard.png)
+
 <One or two sentences: what upstream exporter this stands in for and
 what it reads instead. No architecture.>
 
@@ -44,9 +55,7 @@ toolchain, fetched once into `~/.cache/yeet`. <kernel requirement>
 
 ## Dashboard
 
-![<exporter> on yeet, in Grafana](docs/dashboard.png)
-
-<`dashboard.json`, how to import it, what to change.>
+<`dashboard.json` is the dashboard at the top; how to import it, what to change.>
 
 ## Differences from <upstream>
 

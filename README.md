@@ -1,5 +1,14 @@
 # yeet-exporters
 
+<p align="center">
+  <img src="https://img.shields.io/badge/platform-Linux-1793D1?logo=linux&logoColor=white" alt="Linux">
+  <img src="https://img.shields.io/badge/built%20with-yeet%20%2B%20eBPF-8A2BE2" alt="yeet + eBPF">
+  <img src="https://img.shields.io/badge/metrics-Prometheus-E6522C?logo=prometheus&logoColor=white" alt="Prometheus">
+  <a href="https://github.com/yeet-src/yeet-exporters/actions/workflows/ci.yml"><img src="https://github.com/yeet-src/yeet-exporters/actions/workflows/ci.yml/badge.svg" alt="ci"></a>
+  <a href="https://github.com/yeet-src/yeet-exporters/actions/workflows/kernel-matrix.yml"><img src="https://github.com/yeet-src/yeet-exporters/actions/workflows/kernel-matrix.yml/badge.svg" alt="kernel matrix"></a>
+  <a href="https://discord.gg/JxVseaAVAU"><img src="https://img.shields.io/badge/chat-Discord-5865F2?logo=discord&logoColor=white" alt="Discord"></a>
+</p>
+
 Prometheus exporters, replaced one at a time by a [yeet](https://yeet.cx)
 script that reads the kernel instead of running a daemon next to it. Each
 directory under `exporters/` is named after the exporter it stands in

@@ -1,5 +1,16 @@
 # statsd_exporter, on yeet
 
+<p align="center">
+  <img src="https://img.shields.io/badge/platform-Linux-1793D1?logo=linux&logoColor=white" alt="Linux">
+  <img src="https://img.shields.io/badge/built%20with-yeet%20%2B%20eBPF-8A2BE2" alt="yeet + eBPF">
+  <img src="https://img.shields.io/badge/metrics-Prometheus-E6522C?logo=prometheus&logoColor=white" alt="Prometheus">
+  <img src="https://img.shields.io/badge/dashboard-Grafana-F46800?logo=grafana&logoColor=white" alt="Grafana">
+  <a href="https://github.com/yeet-src/yeet-exporters/actions/workflows/kernel-matrix.yml"><img src="https://github.com/yeet-src/yeet-exporters/actions/workflows/kernel-matrix.yml/badge.svg" alt="kernel matrix"></a>
+  <a href="https://discord.gg/JxVseaAVAU"><img src="https://img.shields.io/badge/chat-Discord-5865F2?logo=discord&logoColor=white" alt="Discord"></a>
+</p>
+
+![StatsD on yeet: datagrams, lines and rejected lines per second, the ports watched, the app's request rate, timer percentiles, gauge and set](docs/dashboard.png)
+
 Stands in for [prometheus/statsd_exporter](https://github.com/prometheus/statsd_exporter)
 without listening on 8125. The datagrams your app already sends are
 read off the wire with eBPF, decoded, and served on `/metrics`.
@@ -79,9 +90,7 @@ wire_collector_dropped_events_total      ring buffer overruns
 
 ## Dashboard
 
-![StatsD on yeet, in Grafana](docs/dashboard.png)
-
-`dashboard.json` is the dashboard above. Import it in Grafana
+`dashboard.json` is the dashboard at the top. Import it in Grafana
 (Dashboards, New, Import) and pick your Prometheus datasource; the job
 picker lists every host scraping this exporter. The `app.*` panels are
 the sample app's metrics and will need their names swapped for yours.
