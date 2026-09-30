@@ -77,6 +77,15 @@ wire_collector_ports{protocol,port}      what is being watched
 wire_collector_dropped_events_total      ring buffer overruns
 ```
 
+## Dashboard
+
+![StatsD on yeet, in Grafana](docs/dashboard.png)
+
+`dashboard.json` is the dashboard above. Import it in Grafana
+(Dashboards, New, Import) and pick your Prometheus datasource; the job
+picker lists every host scraping this exporter. The `app.*` panels are
+the sample app's metrics and will need their names swapped for yours.
+
 ## Differences from statsd_exporter
 
 - **It sees what this host sends,** not what a collector receives.

@@ -42,6 +42,12 @@ toolchain, fetched once into `~/.cache/yeet`. <kernel requirement>
 
 <The metric families, or the rule that names them.>
 
+## Dashboard
+
+![<exporter> on yeet, in Grafana](docs/dashboard.png)
+
+<`dashboard.json`, how to import it, what to change.>
+
 ## Differences from <upstream>
 
 <Bullets. Be specific about what is not there.>
